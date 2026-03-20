@@ -123,7 +123,7 @@ impl Database {
         let content_to_save = encrypted_content.unwrap_or(content);
         
         self.conn.execute(
-            "INSERT OR IGNORE INTO clipboard_items 
+            "INSERT INTO clipboard_items 
              (content_type, content_hash, content_preview, content_full, source_app, created_at, is_pinned, use_count)
              VALUES (?1, ?2, ?3, ?4, ?5, ?6, 0, 0)",
             params![
