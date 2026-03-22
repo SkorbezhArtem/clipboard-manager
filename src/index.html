@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clipboard Manager</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div id="app">
+    <div class="header">
+      <input 
+        type="text" 
+        id="search" 
+        placeholder="🔍 Search clipboard history..." 
+        autocomplete="off"
+      />
+      <div class="header-actions">
+        <button id="settings-btn" title="Settings">⚙️</button>
+        <button id="close-btn" title="Close (Esc)">✕</button>
+      </div>
+    </div>
+    
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-filter="all">All</button>
+      <button class="filter-tab" data-filter="text">📝 Text</button>
+      <button class="filter-tab" data-filter="image">🖼️ Images</button>
+      <button class="filter-tab" data-filter="pinned">📌 Pinned</button>
+      <button class="filter-tab" data-filter="template">⭐ Templates</button>
+    </div>
+
+    <div class="content">
+      <div id="pinned-section" class="section hidden">
+        <div class="section-title">📌 Pinned</div>
+        <div id="pinned-list" class="item-list"></div>
+      </div>
+      
+      <div class="section">
+        <div class="section-title">🕐 History</div>
+        <div id="history-list" class="item-list"></div>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <span>↑↓ Navigate</span>
+      <span>Enter — Copy</span>
+      <span>1-9 — Quick copy</span>
+      <span>T — Template</span>
+      <span>D — Delete</span>
+      <span>Esc — Close</span>
+    </div>
+  </div>
+      </div>
+  </div>
+
+  <script type="module" src="./main.ts"></script>
+</body>
+</html>
