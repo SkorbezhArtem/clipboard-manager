@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unlock Clipboard Manager</title>
+  <style>
+    :root {
+      --bg-primary: #1e1e2e;
+      --bg-secondary: #252535;
+      --text-primary: #cdd6f4;
+      --text-secondary: #9399b2;
+      --accent: #89b4fa;
+      --error: #f38ba8;
+      --border: #313244;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .unlock-container {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .unlock-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .unlock-header h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+      color: var(--accent);
+    }
+
+    .unlock-header p {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-size: 14px;
+      transition: border-color 0.2s;
+    }
+
+    input[type="password"]:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .button-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    button {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg-primary);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-primary);
+    }
+
+    .error-message {
+      background: rgba(243, 139, 168, 0.1);
+      border: 1px solid var(--error);
+      color: var(--error);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    .setup-mode {
+      display: none;
+    }
+
+    .setup-mode.active {
+      display: block;
+    }
+
+    .unlock-mode.hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="unlock-container">
+    <div class="unlock-header">
+      <h1>🔒 Clipboard Manager</h1>
+      <p id="header-text">Enter your master password to unlock</p>
+    </div>
+
+    <div id="error-message" class="error-message"></div>
+
+    <!-- Unlock Mode -->
+    <div id="unlock-mode" class="unlock-mode">
+      <div class="form-group">
+        <label for="password">Master Password</label>
+        <input type="password" id="password" placeholder="Enter password" autofocus />
+      </div>
+
+      <div class="button-group">
+        <button class="btn-primary" id="unlock-btn">Unlock</button>
+        <button class="btn-secondary" id="skip-btn">Skip (No Encryption)</button>
+      </div>
+    </div>
+
+    <!-- Setup Mode -->
+    <div id="setup-mode" class="setup-mode">
+      <div class="form-group">
+        <label for="new-password">Create Master Password</label>
+        <input type="password" id="new-password" placeholder="Enter password" />
+      </div>
+
+      <div class="form-group">
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" id="confirm-password" placeholder="Confirm password" />
+      </div>
+
+      <div class="button-group">
+        <button class="btn-primary" id="setup-btn">Setup Encryption</button>
+        <button class="btn-secondary" id="skip-setup-btn">Skip (No Encryption)</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./unlock.ts"></script>
+</body>
+</html>
