@@ -9,6 +9,7 @@ export interface ClipboardItem {
   source_app: string | null;
   created_at: number;
   is_pinned: boolean;
+  is_template: boolean;
   use_count: number;
   tags: string | null;
 }

@@ -50,7 +50,18 @@
       <span>Esc — Close</span>
     </div>
   </div>
+  
+  <!-- Tag edit modal -->
+  <div id="tag-modal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-title">Edit Tags</div>
+      <input id="tag-modal-input" class="modal-input" type="text" placeholder="work, personal, code…" autocomplete="off" />
+      <div class="modal-hint">Comma-separated tags</div>
+      <div class="modal-actions">
+        <button class="secondary" id="tag-modal-cancel">Cancel</button>
+        <button id="tag-modal-ok">Save</button>
       </div>
+    </div>
   </div>
 
   <script type="module" src="./main.ts"></script>
