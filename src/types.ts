@@ -19,6 +19,8 @@ export interface Settings {
   history_limit: number;
   auto_cleanup_enabled: boolean;
   auto_cleanup_days: number;
+  cleanup_text_days: number;
+  cleanup_image_days: number;
   theme: string;
   custom_hotkey: string;
 }

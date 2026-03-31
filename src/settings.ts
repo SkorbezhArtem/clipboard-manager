@@ -57,7 +57,6 @@ async function loadSettings() {
     (document.getElementById('theme') as HTMLSelectElement).value = currentSettings.theme;
     (document.getElementById('custom-hotkey') as HTMLInputElement).value = currentSettings.custom_hotkey;
     
-    // Explicit theme application after settings load to ensure correct initial state
     applyTheme(currentSettings.theme);
   } catch (error) {
     console.error('Failed to load settings:', error);

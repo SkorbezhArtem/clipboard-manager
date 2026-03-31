@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - Clipboard Manager</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .settings-container {
+      padding: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .settings-section {
+      margin-bottom: 24px;
+      padding: 16px;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+    }
+    
+    .settings-section h3 {
+      margin-bottom: 12px;
+      color: var(--accent);
+    }
+    
+    .setting-item {
+      margin-bottom: 12px;
+    }
+    
+    .setting-item label {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    
+    .setting-item input,
+    .setting-item select {
+      width: 100%;
+      padding: 8px 12px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-primary);
+      font-size: 14px;
+    }
+    
+    .setting-item input[type="checkbox"] {
+      width: auto;
+      margin-right: 8px;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    
+    .stat-card {
+      padding: 12px;
+      background: var(--bg-primary);
+      border-radius: 6px;
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--accent);
+    }
+    
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      background: var(--accent);
+      color: var(--bg-primary);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    button:hover {
+      background: var(--accent-hover);
+    }
+    
+    button.secondary {
+      background: var(--bg-hover);
+      color: var(--text-primary);
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+      color: var(--accent);
+      font-size: 13px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      transition: background 0.15s, border-color 0.15s;
+      width: 72px;
+    }
+    .back-btn:hover {
+      background: var(--bg-hover);
+      border-color: var(--border);
+      color: var(--accent-hover);
+    }
+
+    /* Password modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.visible { display: flex; }
+    .modal-box {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      width: 300px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .modal-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .modal-input {
+      width: 100%;
+      padding: 10px 12px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.15s;
+      box-sizing: border-box;
+    }
+    .modal-input:focus { border-color: var(--accent); }
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="header">
+      <button id="back-btn" class="back-btn" title="Back">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+        Back
+      </button>
+      <h2 style="flex:1;text-align:center;font-size:15px;">Settings</h2>
+      <div style="width:72px;"></div>
+    </div>
+    
+    <div class="content">
+      <div class="settings-container">
+        <!-- Statistics -->
+        <div class="settings-section">
+          <h3>📊 Statistics</h3>
+          <div class="stats-grid" id="stats-grid">
+            <div class="stat-card">
+              <div class="stat-value" id="total-items">0</div>
+              <div class="stat-label">Total Items</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="pinned-items">0</div>
+              <div class="stat-label">Pinned</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="text-items">0</div>
+              <div class="stat-label">Text Items</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="image-items">0</div>
+              <div class="stat-label">Images</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- General Settings -->
+        <div class="settings-section">
+          <h3>🔧 General</h3>
+          <div class="setting-item">
+            <label>History Limit</label>
+            <input type="number" id="history-limit" min="100" max="10000" value="1000">
+          </div>
+          <div class="setting-item">
+            <label>
+              <input type="checkbox" id="auto-cleanup">
+              Enable auto-cleanup of old items
+            </label>
+          </div>
+          <div class="setting-item">
+            <label>Auto-cleanup after (days)</label>
+            <input type="number" id="cleanup-days" min="1" max="365" value="30">
+          </div>
+          <div class="setting-item">
+            <label>Delete <strong>text</strong> items older than (days, 0 = never)</label>
+            <input type="number" id="cleanup-text-days" min="0" max="365" value="0">
+          </div>
+          <div class="setting-item">
+            <label>Delete <strong>image</strong> items older than (days, 0 = never)</label>
+            <input type="number" id="cleanup-image-days" min="0" max="365" value="7">
+          </div>
+        </div>
+        
+        <!-- Appearance -->
+        <div class="settings-section">
+          <h3>🎨 Appearance</h3>
+          <div class="setting-item">
+            <label>Theme</label>
+            <select id="theme">
+              <option value="dark">Dark</option>
+              <option value="light">Light</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Hotkeys -->
+        <div class="settings-section">
+          <h3>⌨️ Hotkeys</h3>
+          <div class="setting-item">
+            <label>Global Hotkey (requires restart)</label>
+            <input type="text" id="custom-hotkey" value="CmdOrCtrl+Shift+V" readonly>
+            <small style="color: var(--text-secondary); font-size: 11px; margin-top: 4px; display: block;">
+              Examples: CmdOrCtrl+Shift+V, Alt+C, Ctrl+Alt+V
+            </small>
+          </div>
+        </div>
+        
+        <!-- Security -->
+        <div class="settings-section">
+          <h3>🔒 Security</h3>
+          <div class="setting-item">
+            <label>Encryption Status</label>
+            <div id="encryption-status" style="margin-bottom: 12px;">
+              <span id="encryption-indicator"></span>
+            </div>
+            <div class="button-group" id="encryption-actions">
+              <button id="setup-encryption-btn" style="display:none;">Setup Encryption</button>
+              <button id="change-password-btn" style="display:none;">Change Master Password</button>
+              <button id="lock-btn" class="secondary" style="display:none;">Lock Now</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Data Management -->
+        <div class="settings-section">
+          <h3>💾 Data Management</h3>
+          <div class="button-group">
+            <button id="export-btn">Export History</button>
+            <button id="import-btn" class="secondary">Import History</button>
+          </div>
+          <input type="file" id="import-file" accept=".json" style="display: none;">
+        </div>
+        
+        <!-- Actions -->
+        <div class="button-group">
+          <button id="save-btn">Save Settings</button>
+          <button id="cancel-btn" class="secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Password modal -->
+  <div class="modal-overlay" id="pwd-modal">
+    <div class="modal-box">
+      <div class="modal-title" id="pwd-modal-title">Enter password</div>
+      <input class="modal-input" type="password" id="pwd-modal-input" autocomplete="new-password" />
+      <div class="modal-actions">
+        <button class="secondary" id="pwd-modal-cancel">Cancel</button>
+        <button id="pwd-modal-ok">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./settings.ts"></script>
+</body>
+</html>

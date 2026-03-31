@@ -6,6 +6,8 @@ pub struct Settings {
     pub history_limit: i64,
     pub auto_cleanup_enabled: bool,
     pub auto_cleanup_days: i64,
+    pub cleanup_text_days: i64,
+    pub cleanup_image_days: i64,
     pub theme: String,
     pub custom_hotkey: String,
 }
@@ -16,6 +18,8 @@ impl Default for Settings {
             history_limit: 1000,
             auto_cleanup_enabled: false,
             auto_cleanup_days: 30,
+            cleanup_text_days: 0,
+            cleanup_image_days: 7,
             theme: "dark".to_string(),
             custom_hotkey: "CmdOrCtrl+Shift+V".to_string(),
         }
