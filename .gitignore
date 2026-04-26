@@ -16,3 +16,7 @@ Thumbs.db
 
 # App data (for testing)
 *.db
+
+# Local helper exports/scripts
+_final.xml
+_git_setup.ps1
