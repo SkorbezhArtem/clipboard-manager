@@ -9,7 +9,7 @@ mod encryption;
 use std::sync::Arc;
 use tauri::{AppHandle, Manager, State};
 use tauri::menu::{Menu, MenuItem};
-use tauri::tray::{TrayIconBuilder, TrayIconEvent};
+use tauri::tray::{MouseButtonState, TrayIconBuilder, TrayIconEvent};
 use tokio::sync::Mutex;
 
 // App state
@@ -417,7 +417,11 @@ fn main() {
                     }
                 })
                 .on_tray_icon_event(|tray, event| {
-                    if let TrayIconEvent::Click { button: tauri::tray::MouseButton::Left, .. } = event {
+                    if let TrayIconEvent::Click {
+                        button: tauri::tray::MouseButton::Left,
+                        button_state: MouseButtonState::Up,
+                        ..
+                    } = event {
                         let app = tray.app_handle();
                         if let Some(window) = app.get_webview_window("main") {
                             if window.is_visible().unwrap_or(false) {
