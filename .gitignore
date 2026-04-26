@@ -20,3 +20,7 @@ Thumbs.db
 # Local helper exports/scripts
 _final.xml
 _git_setup.ps1
+
+# Tauri generated/local files
+src-tauri/gen/
+src-tauri/tauri.conf.json.new
